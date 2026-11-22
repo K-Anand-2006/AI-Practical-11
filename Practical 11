@@ -1,0 +1,77 @@
+
+# Logical Inference using Propositional Logic
+
+print("======================================")
+print("    AI LOGICAL REASONING SYSTEM")
+print("======================================")
+
+# Initial facts
+facts = set()
+
+print("\nEnter the weather conditions:")
+
+rain = input("Is it raining? (yes/no): ").lower()
+
+# Add initial facts
+if rain == "yes":
+    facts.add("Raining")
+else:
+    facts.add("Not Raining")
+
+# Knowledge Base - Logical Rules
+rules = [
+    ("Raining", "Road Wet"),
+    ("Road Wet", "Driving Unsafe"),
+    ("Driving Unsafe", "Drive Slowly"),
+    ("Raining", "Umbrella Needed")
+]
+
+# Forward Chaining Inference
+def forward_chaining(facts, rules):
+
+    new_fact_added = True
+
+    while new_fact_added:
+        new_fact_added = False
+
+        for condition, conclusion in rules:
+
+            if condition in facts and conclusion not in facts:
+
+                facts.add(conclusion)
+
+                print("\nRule Applied:")
+                print("IF", condition, "THEN", conclusion)
+
+                print("New Conclusion:", conclusion)
+
+                new_fact_added = True
+
+    return facts
+
+
+# Perform inference
+print("\n----- LOGICAL INFERENCE -----")
+
+result = forward_chaining(facts, rules)
+
+# Display final conclusions
+print("\n----- FINAL KNOWLEDGE BASE -----")
+
+for fact in sorted(result):
+    print(fact)
+
+# Display result
+print("\n----- AI DECISION -----")
+
+if "Drive Slowly" in result:
+    print("Advice: Drive slowly and carefully.")
+
+if "Umbrella Needed" in result:
+    print("Advice: Carry an umbrella.")
+
+if "Not Raining" in result:
+    print("Advice: No rain-related precautions are needed.")
+
+print("\nInference Completed Successfully!")
+print("======================================")
